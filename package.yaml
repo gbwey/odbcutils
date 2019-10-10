@@ -1,0 +1,43 @@
+name:                odbcutils
+version:             0.1.0.0
+#synopsis:
+#description:
+homepage:            https://github.com/gbwey/odbcutils#readme
+license:             BSD3
+author:              gbwey
+maintainer:          gbwey9@gmail.com
+copyright:           2019 gbwey
+category:            Web
+extra-source-files:
+- README.md
+
+dependencies:
+  - base >= 4.7 && < 5
+  - bytestring
+  - lens
+  - mtl
+  - shakespeare
+  - text
+  - odbc == 0.3
+  - either
+  - lens-errors
+
+library:
+  source-dirs: src
+  ghc-options:
+  - -fomit-interface-pragmas
+
+tests:
+  odbcutils-test:
+    main:                Main.hs
+    source-dirs:
+    - src
+    - test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+#    - -fomit-interface-pragmas
+    dependencies:
+    - odbcutils
+    - easytest
