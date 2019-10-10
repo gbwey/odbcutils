@@ -10,12 +10,14 @@
 {-# LANGUAGE DeriveGeneric #-}
 module OdbcUtils where
 import Control.Lens
+--import qualified Database.ODBC.Internal as OI
 import qualified Database.ODBC.SQLServer as O
 import Database.ODBC.SQLServer (ResultSet(..), Column(..), ResultSets)
 import Control.Lens.Error
 import Data.Maybe
 import Data.ByteString (ByteString)
 import Data.Text (Text)
+--import qualified Data.Text as T
 import qualified Data.Text.Encoding as T
 import qualified Data.ByteString.Char8 as BS
 import GHC.Stack
@@ -180,7 +182,7 @@ nDdl n rss = rss ^&. nOnly n . traversed . vddl -- all n will be RDdl else error
 nUpd :: Int -> ResultSets -> ([String], [Int])
 nUpd n rss = rss ^&.. nOnly n . traversed . vupd -- all n will be RUpd else error [returns a list of int return codes]
 
--- traverses the stuff but doesnt peel out the data so might not be so useful (ie get a list of stuff)
+-- traverses but doesnt peel out the data so might not be so useful (ie get a list of stuff)
 -- see row1col1 which actually extract stuff
 {-
 nMetaAndData :: Int -> ResultSets -> ([String], [[[O.Value]]])
@@ -235,14 +237,13 @@ ddl1 = oneOnly "resultset" . vddl
 --ddl2 :: (Applicative f, LensFail [String] f) => LensLike' f ResultSets ()
 --ddl2 = twoOnly "resultset" . vddl
 
--- these are good cos they give us the exact type! ie unwrap stuff
 upd1 :: (Applicative f, LensFail [String] f) => LensLike' f ResultSets Int
 upd1 = oneOnly "resultset" . vupd
 
 row1col1 :: (Applicative f, LensFail [String] f) => LensLike' f ResultSets O.Value
 row1col1 = row1 . oneOnly "column"
 
--- patterns work better
+-- useful but pattern match works better
 row1col2 :: (Applicative f, LensFail [String] f) => LensLike' f ResultSets (O.Value, O.Value)
 row1col2 = row1 . twoOnly "columns"
 
@@ -258,4 +259,5 @@ row1col2Maybe = row1Maybe . twoMaybeLifted "columns (1 row+ 2 columns or no rows
 
 row1Maybe :: (Applicative f, LensFail [String] f) => LensLike' f ResultSets (Maybe [O.Value])
 row1Maybe = oneOnly "resultset" . vdata . oneMaybe "row"
+
 
