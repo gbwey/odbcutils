@@ -40,4 +40,5 @@ tests:
 #    - -fomit-interface-pragmas
     dependencies:
     - odbcutils
-    - easytest
+    - tasty
+    - tasty-hunit
