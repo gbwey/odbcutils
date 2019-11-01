@@ -2,10 +2,8 @@ resolver: lts-14.10
 
 packages:
 - .
-- location: ../odbc
-  extra-dep: true
-
 extra-deps:
 - lens-errors-0.2.2.0
+- ../odbc
 
 # ghc-options: {"$locals": -ddump-to-file -ddump-hi}
