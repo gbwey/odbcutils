@@ -1,6 +1,4 @@
 {-# OPTIONS -Wall #-}
-{-# LANGUAGE TypeApplications #-}
-{-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 module Main where
