@@ -39,10 +39,7 @@ bmonoid =
 bconcat :: HasCallStack => [O.Value] -> ByteString
 bconcat = foldl' (\a b -> a <> bmonoid b) mempty
 
-
-newtype IntLike = IntLike { _unIntLike :: Int } deriving (Generic, Show, Eq)
-
-makeLenses ''IntLike
+newtype IntLike = IntLike Int deriving (Generic, Show, Eq)
 
 instance O.FromValue IntLike where
   fromValue =
@@ -61,9 +58,7 @@ truncEpsilon d =
   in if abs (d - fromIntegral r) <= 0.01 then pure r
      else Left "diff larger than epsilon"
 
-newtype StringLike = StringLike { _unStringLike :: Text } deriving (Generic, Show, Eq)
-
-makeLenses ''StringLike
+newtype StringLike = StringLike Text deriving (Generic, Show, Eq)
 
 instance O.FromValue StringLike where
   fromValue =
@@ -86,7 +81,6 @@ pattern Upd1P rc = [RUpd rc]
 
 pattern Ddl1P :: ResultSets
 pattern Ddl1P = [RDdl]
-
 
 _RDdl :: Prism' ResultSet ()
 _RDdl = prism' (const RDdl) (\case
